@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagCloudBuilder", "TagCloudBuilder\TagCloudBuilder.csproj", "{88A45E56-321D-419D-A425-D4A517564092}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88A45E56-321D-419D-A425-D4A517564092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A45E56-321D-419D-A425-D4A517564092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A45E56-321D-419D-A425-D4A517564092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A45E56-321D-419D-A425-D4A517564092}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9013AF6-E60B-4E51-92D7-DF1EE42CDF7A}
+	EndGlobalSection
+EndGlobal
