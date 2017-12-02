@@ -30,13 +30,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 				weightedWord.Word,
 				new Font(_fontFamily, _converterWeightToSize(weightedWord.Weight), _style),
 				_brush,
-				rectanglePlace,
-				new StringFormat
-				{
-					Alignment = StringAlignment.Center,
-					LineAlignment = StringAlignment.Center,
-					FormatFlags = StringFormatFlags.FitBlackBox
-				}
+				rectanglePlace.Location
 			);
 		}
 	}

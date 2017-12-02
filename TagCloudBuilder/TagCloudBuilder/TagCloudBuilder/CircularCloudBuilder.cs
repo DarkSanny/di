@@ -8,10 +8,10 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public class CircularCloudBuilder : ICloudBuilder
 	{
-		private readonly IFunction _function;
+		private readonly PolarFunction _function;
 		private readonly List<Rectangle> _cloud;
 
-		public CircularCloudBuilder(IFunction function)
+		public CircularCloudBuilder(PolarFunction function)
 		{
 			_function = function;
 			_cloud = new List<Rectangle>();
@@ -36,7 +36,22 @@ namespace TagCloudBuilder.TagCloudBuilder
 					continue;
 				intersectRect = GetIntersect(rectangle);
 				if (intersectRect != default(Rectangle)) continue;
-				return rectangle;
+				return TryMoveToCenter(rectangle, _function);
+			}
+		}
+
+		private Rectangle TryMoveToCenter(Rectangle rectangle, PolarFunction function)
+		{
+			var correctRectangle = rectangle;
+			var line = new PolarDecreasingLine(function.Center, function.Length, function.Angle);
+			while (true)
+			{
+				var point = line.GetNextPoint();
+				var rect = CreateRectangle(point, rectangle.Size);
+				var intersectRect = GetIntersect(rect);
+				if (intersectRect == default(Rectangle) && Math.Abs(line.Length) > 1e-10)
+					correctRectangle = rect;
+				else return correctRectangle;
 			}
 		}
 

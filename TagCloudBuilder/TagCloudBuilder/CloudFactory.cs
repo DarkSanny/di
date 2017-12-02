@@ -7,15 +7,21 @@ using TagCloudBuilder.WordsConverter;
 
 namespace TagCloudBuilder
 {
-	public class Program
+	public class CloudFactory
 	{
-		public static void Main()
+
+		public static Bitmap CreateCloud()
 		{
 			var builder = ConfigurateBuilder();
 			var container = builder.Build();
-			var image = container.Resolve<IImageBuilder>().BuildImage();
-			var saver = container.Resolve<IImageSaver>();
-			saver.SaveImage(image);
+			return container.Resolve<IImageBuilder>().BuildImage();
+		}
+
+		public static IImageSaver CreateSaver()
+		{
+			var builder = ConfigurateBuilder();
+			var container = builder.Build();
+			return container.Resolve<IImageSaver>();
 		}
 
 		private static ContainerBuilder ConfigurateBuilder()
@@ -35,7 +41,7 @@ namespace TagCloudBuilder
 
 		private static void ConfigurateBuilderForCloud(ContainerBuilder builder)
 		{
-			builder.RegisterType<PolarSpiral>().As<IFunction>()
+			builder.RegisterType<PolarSpiral>().As<PolarFunction>()
 				.WithParameter("center", new Point(500, 500))
 				.WithParameter("coefficient", 0.5);
 			builder.RegisterType<WordDrawer>().As<IWordDrawer>()

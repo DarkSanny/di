@@ -36,6 +36,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 			foreach (var weightedWord in weightedWords)
 			{
 				var rectanglePlace = _builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord));
+				graphics.DrawRectangle(Pens.RoyalBlue, rectanglePlace);
 				_drawer.DrawWord(graphics, weightedWord, rectanglePlace);
 			}
 		}
