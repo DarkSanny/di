@@ -16,7 +16,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 			ICloudBuilder builder,
 			IWordReader reader,
 			IWordWeighter weighter,
-			IWordDrawer	drawer,
+			IWordDrawer drawer,
 			Size imageSize
 			)
 		{
