@@ -5,11 +5,8 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public class CloudImageBuilder :IImageBuilder
 	{
-		private readonly ICloudBuilder _builder;
-		private readonly IWordReader _reader;
 		private readonly IWordWeighter _weighter;
 		private readonly IWordDrawer _drawer;
-		private readonly Size _imageSize;
 		private Bitmap _cloudImage;
 
 		public CloudImageBuilder(
@@ -20,22 +17,24 @@ namespace TagCloudBuilder.TagCloudBuilder
 			Size imageSize
 			)
 		{
-			_builder = builder;
-			_reader = reader;
 			_weighter = weighter;
 			_drawer = drawer;
-			_imageSize = imageSize;
-			BuildCloudImage();
+			BuildCloudImage(builder, reader, imageSize);
 		}
 
-		private void BuildCloudImage()
+		public void RebuildCloudImage(ICloudBuilder builder, IWordReader reader, Size imageSize)
 		{
-			_cloudImage = new Bitmap(_imageSize.Width, _imageSize.Height);
+			BuildCloudImage(builder, reader, imageSize);
+		}
+
+		private void BuildCloudImage(ICloudBuilder builder, IWordReader reader, Size imageSize)
+		{
+			_cloudImage = new Bitmap(imageSize.Width, imageSize.Height);
 			var graphics = Graphics.FromImage(_cloudImage);
-			var weightedWords = _weighter.WeightWords(_reader);
+			var weightedWords = _weighter.WeightWords(reader);
 			foreach (var weightedWord in weightedWords)
 			{
-				var rectanglePlace = _builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord));
+				var rectanglePlace = builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord));
 				graphics.DrawRectangle(Pens.RoyalBlue, rectanglePlace);
 				_drawer.DrawWord(graphics, weightedWord, rectanglePlace);
 			}

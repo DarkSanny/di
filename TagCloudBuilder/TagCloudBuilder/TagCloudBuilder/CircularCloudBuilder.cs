@@ -26,7 +26,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 
 		private Rectangle FindPlaceForNextRectangle(Size size)
 		{
-			if (IsShouldThrowArgumentException(size)) throw new ArgumentException();
+			if (!IsValidSize(size)) throw new ArgumentException();
 			var intersectingRectangle = default(Rectangle);
 			while (true)
 			{
@@ -61,9 +61,9 @@ namespace TagCloudBuilder.TagCloudBuilder
 		private static Rectangle CreateRectangle(Point point, Size size) =>
 			new Rectangle(point.X - size.Width / 2, point.Y - size.Height / 2, size.Width, size.Height);
 
-		private static bool IsShouldThrowArgumentException(Size rectangleSize)
+		private static bool IsValidSize(Size rectangleSize)
 		{
-			return rectangleSize.Width <= 0 || rectangleSize.Height <= 0;
+			return rectangleSize.Width > 0 && rectangleSize.Height > 0;
 		}
 	}
 }

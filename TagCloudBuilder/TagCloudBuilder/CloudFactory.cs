@@ -56,7 +56,7 @@ namespace TagCloudBuilder
 		private static void ConfigurateBuilderForGettingWords(ContainerBuilder builder)
 		{
 			builder.RegisterType<WordReaderFromFile>().As<IWordReader>()
-				.WithParameter("filename", Environment.CurrentDirectory + "\\text.txt");
+				.WithParameter("filename", Environment.CurrentDirectory + "\\FileExamples\\TextRu.txt");
 			builder.RegisterType<BoringWordsAnalyzer>().As<IWordAnalyzer>();
 			builder.RegisterType<WordConverter>().As<IWordConverter>();
 			builder.RegisterType<WordsFilter>().As<IWordFilter>();
