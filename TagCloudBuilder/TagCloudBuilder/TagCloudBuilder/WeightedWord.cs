@@ -2,7 +2,6 @@
 {
 	public class WeightedWord
 	{
-
 		public string Word { get; }
 		public int Weight { get; }
 
@@ -11,6 +10,5 @@
 			Word = word;
 			Weight = weight;
 		}
-
 	}
 }

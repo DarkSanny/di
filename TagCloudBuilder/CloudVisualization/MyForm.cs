@@ -5,7 +5,6 @@ namespace CloudVisualization
 {
 	public class MyForm : Form
 	{
-
 		public MyForm()
 		{
 			var cloud = CloudFactory.CreateCloud();

@@ -88,8 +88,8 @@
     <Compile Include="TagCloudBuilder\WordDrawer.cs" />
     <Compile Include="Tests\CircularCloudShould.cs" />
     <Compile Include="Tests\WordsFilterShould.cs" />
-    <Compile Include="WordsConverter\BoringWordsAnalizator.cs" />
-    <Compile Include="WordsConverter\IWordAnalizator.cs" />
+    <Compile Include="WordsConverter\BoringWordsAnalyzer.cs" />
+    <Compile Include="WordsConverter\IWordAnalyzer.cs" />
     <Compile Include="WordsConverter\IWordConverter.cs" />
     <Compile Include="WordsConverter\IWordFilter.cs" />
     <Compile Include="WordsConverter\IWordReader.cs" />

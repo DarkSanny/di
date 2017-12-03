@@ -1,9 +1,7 @@
 ﻿namespace TagCloudBuilder.WordsConverter
 {
-	public interface IWordAnalizator
+	public interface IWordAnalyzer
 	{
-
 		bool IsCorrectWord(string word);
-
 	}
 }

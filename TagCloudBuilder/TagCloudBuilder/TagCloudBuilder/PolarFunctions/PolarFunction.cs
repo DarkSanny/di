@@ -3,11 +3,8 @@ using System.Drawing;
 
 namespace TagCloudBuilder.TagCloudBuilder.PolarFunctions
 {
-
-
 	public abstract class PolarFunction : IFunction
 	{
-
 		public double Length { get; protected set; }
 		public double Angle { get; protected set; }
 		public Point Center { get; protected set; }

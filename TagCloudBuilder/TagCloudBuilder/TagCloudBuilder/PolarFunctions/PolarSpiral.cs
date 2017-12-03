@@ -5,7 +5,6 @@ namespace TagCloudBuilder.TagCloudBuilder.PolarFunctions
 {
 	public class PolarSpiral : PolarFunction
 	{
-
 		private readonly double _coefficient;
 
 		public PolarSpiral(Point center, double coefficient) : base(center)

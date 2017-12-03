@@ -9,7 +9,6 @@ namespace TagCloudBuilder
 {
 	public class CloudFactory
 	{
-
 		public static Bitmap CreateCloud()
 		{
 			var builder = ConfigurateBuilder();
@@ -58,7 +57,7 @@ namespace TagCloudBuilder
 		{
 			builder.RegisterType<WordReaderFromFile>().As<IWordReader>()
 				.WithParameter("filename", Environment.CurrentDirectory + "\\text.txt");
-			builder.RegisterType<BoringWordsAnalizator>().As<IWordAnalizator>();
+			builder.RegisterType<BoringWordsAnalyzer>().As<IWordAnalyzer>();
 			builder.RegisterType<WordConverter>().As<IWordConverter>();
 			builder.RegisterType<WordsFilter>().As<IWordFilter>();
 		}

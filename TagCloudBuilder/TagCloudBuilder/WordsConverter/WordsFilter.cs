@@ -5,12 +5,12 @@ namespace TagCloudBuilder.WordsConverter
 {
 	public class WordsFilter : IWordFilter
 	{
-		private readonly IWordAnalizator _analizator;
+		private readonly IWordAnalyzer _analyzer;
 		private readonly IWordConverter _converter;
 
-		public WordsFilter(IWordAnalizator analizator, IWordConverter converter)
+		public WordsFilter(IWordAnalyzer analyzer, IWordConverter converter)
 		{
-			_analizator = analizator;
+			_analyzer = analyzer;
 			_converter = converter;
 		}
 
@@ -19,7 +19,7 @@ namespace TagCloudBuilder.WordsConverter
 			return reader
 				.ReadWords()
 				.Select(_converter.ConvertWord)
-				.Where(_analizator.IsCorrectWord)
+				.Where(_analyzer.IsCorrectWord)
 				.ToList();
 		}
 	}

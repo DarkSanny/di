@@ -12,7 +12,7 @@ namespace TagCloudBuilder.Tests
 	{
 		private List<string> _words;
 		private Mock<IWordReader> _reader;
-		private Mock<IWordAnalizator> _analizator;
+		private Mock<IWordAnalyzer> _analyzer;
 		private Mock<IWordConverter> _converter;
 
 		[SetUp]
@@ -21,25 +21,25 @@ namespace TagCloudBuilder.Tests
 			_words = new List<string>() {"слово"};
 			_reader = new Mock<IWordReader>();
 			_reader.Setup((r) => r.ReadWords()).Returns(_words);
-			_analizator = new Mock<IWordAnalizator>();
-			_analizator.Setup((a) => a.IsCorrectWord(It.IsAny<string>())).Returns(true);
+			_analyzer = new Mock<IWordAnalyzer>();
+			_analyzer.Setup((a) => a.IsCorrectWord(It.IsAny<string>())).Returns(true);
 			_converter = new Mock<IWordConverter>();
 			_converter.Setup((c) => c.ConvertWord(It.IsAny<string>())).Returns((string s) => s);
 		}
 
 		[Test]
-		public void ReturnSameWords_WhenAnalizatorAndConverterDoingNothing()
+		public void ReturnSameWords_WhenAnalyzerAndConverterDoingNothing()
 		{
-			var filter = new WordsFilter(_analizator.Object, _converter.Object);
+			var filter = new WordsFilter(_analyzer.Object, _converter.Object);
 			filter.FilterWords(_reader.Object).ShouldBeEquivalentTo(_words);
 		}
 
 		[Test]
-		public void ExludeIncorrectWord()
+		public void ExcludeIncorrectWord()
 		{
-			var analizator = new Mock<IWordAnalizator>();
-			analizator.Setup((a) => a.IsCorrectWord("слово")).Returns(false);
-			var filter = new WordsFilter(analizator.Object, _converter.Object);
+			var analyzer = new Mock<IWordAnalyzer>();
+			analyzer.Setup((a) => a.IsCorrectWord("слово")).Returns(false);
+			var filter = new WordsFilter(analyzer.Object, _converter.Object);
 			filter.FilterWords(_reader.Object).Should().BeEmpty();
 		}
 
@@ -48,24 +48,24 @@ namespace TagCloudBuilder.Tests
 		{
 			var converter = new Mock<IWordConverter>();
 			converter.Setup((c) => c.ConvertWord(It.IsAny<string>())).Returns((string s) => s + "!");
-			var filter = new WordsFilter(_analizator.Object, converter.Object);
+			var filter = new WordsFilter(_analyzer.Object, converter.Object);
 			filter.FilterWords(_reader.Object).ShouldBeEquivalentTo(new List<string>() {"слово!"});
 		}
 
 		[Test]
-		public void ReturnInLoverCase_WhenWordConverter()
+		public void ReturnInLowerCase_WhenWordConverter()
 		{
-			var filter = new WordsFilter(_analizator.Object, new WordConverter());
+			var filter = new WordsFilter(_analyzer.Object, new WordConverter());
 			filter.FilterWords(_reader.Object).ShouldBeEquivalentTo(_words.Select(w => w.ToLower()));
 		}
 
 		[Test]
-		public void ExludeWords_WhenBoringWords()
+		public void ExcludeWords_WhenBoringWords()
 		{
 			var words = new List<string>() {"и"};
 			var reader = new Mock<IWordReader>();
 			reader.Setup((r) => r.ReadWords()).Returns(words);
-			var filter = new WordsFilter(new BoringWordsAnalizator(), _converter.Object);
+			var filter = new WordsFilter(new BoringWordsAnalyzer(), _converter.Object);
 			filter.FilterWords(reader.Object).Should().BeEmpty();
 		}
 	}

@@ -2,9 +2,8 @@
 
 namespace TagCloudBuilder.WordsConverter
 {
-	public class BoringWordsAnalizator : IWordAnalizator
+	public class BoringWordsAnalyzer : IWordAnalyzer
 	{
-
 		//можно сделать конструктор, принимающий IWordReader и получать список слов из него
 		private readonly string[] _boringWords =
 		{

@@ -19,23 +19,23 @@ namespace TagCloudBuilder.TagCloudBuilder
 
 		public Rectangle PutNextRectangle(Size rectangleSize)
 		{
-			var rectangle = FindPlaceForNextWord(rectangleSize);
+			var rectangle = FindPlaceForNextRectangle(rectangleSize);
 			_cloud.Add(rectangle);
 			return rectangle;
 		}
 
-		private Rectangle FindPlaceForNextWord(Size size)
+		private Rectangle FindPlaceForNextRectangle(Size size)
 		{
 			if (IsShouldThrowArgumentException(size)) throw new ArgumentException();
-			var intersectRect = default(Rectangle);
+			var intersectRectangle = default(Rectangle);
 			while (true)
 			{
 				var point = _function.GetNextPoint();
 				var rectangle = CreateRectangle(point, size);
-				if (intersectRect != default(Rectangle) && rectangle.IntersectsWith(intersectRect))
+				if (intersectRectangle != default(Rectangle) && rectangle.IntersectsWith(intersectRectangle))
 					continue;
-				intersectRect = GetIntersect(rectangle);
-				if (intersectRect != default(Rectangle)) continue;
+				intersectRectangle = GetIntersection(rectangle);
+				if (intersectRectangle != default(Rectangle)) continue;
 				return TryMoveToCenter(rectangle, _function);
 			}
 		}
@@ -48,14 +48,14 @@ namespace TagCloudBuilder.TagCloudBuilder
 			{
 				var point = line.GetNextPoint();
 				var rect = CreateRectangle(point, rectangle.Size);
-				var intersectRect = GetIntersect(rect);
+				var intersectRect = GetIntersection(rect);
 				if (intersectRect == default(Rectangle) && Math.Abs(line.Length) > 1e-10)
 					correctRectangle = rect;
 				else return correctRectangle;
 			}
 		}
 
-		private Rectangle GetIntersect(Rectangle rectangle) => _cloud
+		private Rectangle GetIntersection(Rectangle rectangle) => _cloud
 			.FirstOrDefault(rect => rect.IntersectsWith(rectangle));
 
 		private static Rectangle CreateRectangle(Point point, Size size) =>

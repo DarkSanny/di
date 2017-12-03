@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 
 namespace TagCloudBuilder
 {
-	public class PngSaver	:IImageSaver
+	public class PngSaver :IImageSaver
 	{
 		private readonly string _filepath;
 
