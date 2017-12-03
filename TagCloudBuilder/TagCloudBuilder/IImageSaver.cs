@@ -4,6 +4,6 @@ namespace TagCloudBuilder
 {
 	public interface IImageSaver
 	{
-		void SaveImage(Bitmap bitmap);
+		void SaveImage(Bitmap bitmap, string filepath);
 	}
 }

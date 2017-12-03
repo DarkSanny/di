@@ -4,6 +4,6 @@ namespace TagCloudBuilder.WordsConverter
 {
 	public interface IWordReader
 	{
-		List<string> ReadWords();
+		IEnumerable<string> ReadWords();
 	}
 }

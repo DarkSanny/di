@@ -4,9 +4,9 @@ namespace TagCloudBuilder
 {
 	public static class BitmapExtensions
 	{
-		public static void SaveImage(this Bitmap bitmap, IImageSaver saver)
+		public static void SaveImage(this Bitmap bitmap, IImageSaver saver, string filename)
 		{
-			saver.SaveImage(bitmap);
+			saver.SaveImage(bitmap, filename);
 		}
 	}
 }

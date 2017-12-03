@@ -13,7 +13,7 @@ namespace CloudVisualization
 			{
 				args.Graphics.DrawImage(cloud, 0, 0);
 			};
-			cloud.SaveImage(CloudFactory.CreateSaver());
+			cloud.SaveImage(CloudFactory.CreateSaver(), "Image1.png");
 		}
 	}
 }

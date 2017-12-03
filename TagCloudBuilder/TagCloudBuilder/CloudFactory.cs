@@ -34,8 +34,7 @@ namespace TagCloudBuilder
 
 		private static void ConfigurateBuilderForSavingImage(ContainerBuilder builder)
 		{
-			builder.RegisterType<PngSaver>().As<IImageSaver>()
-				.WithParameter("filepath", "Image1.png");
+			builder.RegisterType<PngSaver>().As<IImageSaver>();
 		}
 
 		private static void ConfigurateBuilderForCloud(ContainerBuilder builder)
