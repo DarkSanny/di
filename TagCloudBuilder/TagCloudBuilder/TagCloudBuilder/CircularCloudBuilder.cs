@@ -31,12 +31,12 @@ namespace TagCloudBuilder.TagCloudBuilder
 			while (true)
 			{
 				var point = _function.GetNextPoint();
-				var rectangle = CreateRectangle(point, size);
-				if (intersectingRectangle != default(Rectangle) && rectangle.IntersectsWith(intersectingRectangle))
+				var nextRectangle = CreateRectangle(point, size);
+				if (intersectingRectangle != default(Rectangle) && nextRectangle.IntersectsWith(intersectingRectangle))
 					continue;
-				intersectingRectangle = GetIntersection(rectangle);
+				intersectingRectangle = GetIntersection(nextRectangle);
 				if (intersectingRectangle != default(Rectangle)) continue;
-				return TryMoveToCenter(rectangle, _function);
+				return TryMoveToCenter(nextRectangle, _function);
 			}
 		}
 
@@ -47,10 +47,10 @@ namespace TagCloudBuilder.TagCloudBuilder
 			while (true)
 			{
 				var point = line.GetNextPoint();
-				var rect = CreateRectangle(point, rectangle.Size);
-				var intersectingRect = GetIntersection(rect);
-				if (intersectingRect == default(Rectangle) && Math.Abs(line.Length) > 1e-10)
-					correctRectangle = rect;
+				var rextRectangle = CreateRectangle(point, rectangle.Size);
+				var intersectingRectangle = GetIntersection(rextRectangle);
+				if (intersectingRectangle == default(Rectangle) && Math.Abs(line.Length) > 1e-10)
+					correctRectangle = rextRectangle;
 				else return correctRectangle;
 			}
 		}
