@@ -5,21 +5,22 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public class WordDrawer : IWordDrawer
 	{
-		private readonly FontFamily _fontFamily;
-		private readonly FontStyle _style;
-		private readonly Brush _brush;
+		public  FontFamily FontFamily { get; set; }
+		public FontStyle Style { get; set; }
+		public  Brush Brush { get; set; }
 		private readonly Func<int, int> _converterWeightToSize = (weight) => 20 + weight * 2;
 
-		public WordDrawer(FontFamily fontFamily, FontStyle style,  Brush brush)
+		public WordDrawer()
 		{
-			_fontFamily = fontFamily;
-			_style = style;
-			_brush = brush;
+			FontFamily = new FontFamily("Arial");
+			Style = new FontStyle();
+			Brush = Brushes.Black;
 		}
+
 
 		public Size GetWordSize(Graphics graphics, WeightedWord weightedWord)
 		{
-			var font = new Font(_fontFamily, _converterWeightToSize(weightedWord.Weight), _style);
+			var font = new Font(FontFamily, _converterWeightToSize(weightedWord.Weight), Style);
 			var measureString = graphics.MeasureString(weightedWord.Word, font);
 			return measureString.ToSize();
 		}
@@ -28,8 +29,8 @@ namespace TagCloudBuilder.TagCloudBuilder
 		{
 			graphics.DrawString(
 				weightedWord.Word,
-				new Font(_fontFamily, _converterWeightToSize(weightedWord.Weight), _style),
-				_brush,
+				new Font(FontFamily, _converterWeightToSize(weightedWord.Weight), Style),
+				Brush,
 				rectanglePlace.Location
 			);
 		}

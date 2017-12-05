@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Autofac;
+using TagCloudBuilder.CommandController;
 using TagCloudBuilder.TagCloudBuilder;
 using TagCloudBuilder.TagCloudBuilder.PolarFunctions;
 using TagCloudBuilder.WordsConverter;
@@ -12,7 +13,15 @@ namespace TagCloudBuilder
 		public static Bitmap CreateCloud()
 		{
 			var builder = ConfigurateBuilder();
+			builder.RegisterType<ColorChangeCommand>()
+				.As<ICommand>()
+				.WithParameter("writer", Console.Out);
+			builder.RegisterType<CloudCommandController>()
+				.As<CloudCommandController>()
+				.WithParameter("writer", Console.Out);
 			var container = builder.Build();
+			var controller = container.Resolve<CloudCommandController>();
+			controller.Execute("set color 100 200 20");
 			return container.Resolve<IImageBuilder>().BuildImage();
 		}
 
@@ -42,10 +51,8 @@ namespace TagCloudBuilder
 			builder.RegisterType<PolarSpiral>().As<PolarFunction>()
 				.WithParameter("center", new Point(500, 500))
 				.WithParameter("coefficient", 0.5);
-			builder.RegisterType<WordDrawer>().As<IWordDrawer>()
-				.WithParameter("fontFamily", new FontFamily("Arial"))
-				.WithParameter("style", new FontStyle())
-				.WithParameter("brush", Brushes.Black);
+			builder.RegisterType<WordDrawer>().As<IWordDrawer>().As<WordDrawer>()
+				.SingleInstance();
 			builder.RegisterType<SortedWeightedWords>().As<IWordWeighter>();
 			builder.RegisterType<CircularCloudBuilder>().As<ICloudBuilder>();
 			builder.RegisterType<CloudImageBuilder>().As<IImageBuilder>()

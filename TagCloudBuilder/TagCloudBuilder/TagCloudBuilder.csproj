@@ -69,6 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapExtensions.cs" />
+    <Compile Include="CommandController\CloudCommandController.cs" />
+    <Compile Include="CommandController\ColorChangeCommand.cs" />
+    <Compile Include="CommandController\ICommand.cs" />
+    <Compile Include="CommandController\ICommandController.cs" />
     <Compile Include="IImageSaver.cs" />
     <Compile Include="PngSaver.cs" />
     <Compile Include="CloudFactory.cs" />
