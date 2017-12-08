@@ -13,7 +13,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 			_filter = filter;
 		}
 
-		public List<WeightedWord> WeightWords(IWordReader reader)
+		public IEnumerable<WeightedWord> WeightWords(IWordReader reader)
 		{
 			return _filter
 				.FilterWords(reader)

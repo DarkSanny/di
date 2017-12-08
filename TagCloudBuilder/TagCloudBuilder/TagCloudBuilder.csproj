@@ -91,6 +91,7 @@
     <Compile Include="TagCloudBuilder\WeightedWord.cs" />
     <Compile Include="TagCloudBuilder\WordDrawer.cs" />
     <Compile Include="Tests\CircularCloudShould.cs" />
+    <Compile Include="Tests\ImageBuilderShould.cs" />
     <Compile Include="Tests\WordsFilterShould.cs" />
     <Compile Include="WordsConverter\BoringWordsAnalyzer.cs" />
     <Compile Include="WordsConverter\IWordAnalyzer.cs" />

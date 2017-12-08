@@ -23,7 +23,7 @@ namespace TagCloudBuilder.CommandController
 			else
 			{
 				var rgb = args.Select(int.Parse).ToList();
-				 _drawer.Brush = new SolidBrush(Color.FromArgb(100, rgb[0], rgb[1], rgb[2]));
+				 _drawer.SetBrush(new SolidBrush(Color.FromArgb(100, rgb[0], rgb[1], rgb[2])));
 			}
 		}
 

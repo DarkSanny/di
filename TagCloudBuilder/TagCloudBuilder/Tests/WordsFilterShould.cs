@@ -68,5 +68,31 @@ namespace TagCloudBuilder.Tests
 			var filter = new WordsFilter(new BoringWordsAnalyzer(), _converter.Object);
 			filter.FilterWords(reader.Object).Should().BeEmpty();
 		}
+
+		[Test]
+		public void Reader_ShouldBePerformedOnce()
+		{
+			var calls = 0;
+			var reader = new Mock<IWordReader>();
+			reader.Setup((r) => r.ReadWords()).Returns(_words)
+				.Callback(() => calls++);
+			var filter = new WordsFilter(_analyzer.Object, _converter.Object);
+			filter.FilterWords(reader.Object);
+			calls.Should().Be(1);
+		}
+
+		[Test]
+		public void Analyzer_ShoultCheckEachWords()
+		{
+			var words = new List<string>() {"первое", "второе"};
+			var reader = new Mock<IWordReader>();
+			reader.Setup((r) => r.ReadWords()).Returns(words);
+			var analyzer = new Mock<IWordAnalyzer>();
+			var calls = 0;
+			analyzer.Setup((a) => a.IsCorrectWord(It.IsAny<string>())).Returns(true).Callback(() => calls++);
+			var filter = new WordsFilter(analyzer.Object, _converter.Object);
+			filter.FilterWords(reader.Object).ToList();
+			calls.Should().Be(words.Count);
+		}
 	}
 }
