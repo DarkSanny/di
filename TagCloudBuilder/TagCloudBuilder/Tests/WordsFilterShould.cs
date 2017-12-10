@@ -82,14 +82,16 @@ namespace TagCloudBuilder.Tests
 		}
 
 		[Test]
-		public void Analyzer_ShoultCheckEachWords()
+		public void Analyzer_ShouldCheckEachWords()
 		{
 			var words = new List<string>() {"первое", "второе"};
 			var reader = new Mock<IWordReader>();
 			reader.Setup((r) => r.ReadWords()).Returns(words);
 			var analyzer = new Mock<IWordAnalyzer>();
 			var calls = 0;
-			analyzer.Setup((a) => a.IsCorrectWord(It.IsAny<string>())).Returns(true).Callback(() => calls++);
+			analyzer.Setup((a) => a.IsCorrectWord(It.IsAny<string>()))
+				.Returns(true)
+				.Callback(() => calls++);
 			var filter = new WordsFilter(analyzer.Object, _converter.Object);
 			filter.FilterWords(reader.Object).ToList();
 			calls.Should().Be(words.Count);
