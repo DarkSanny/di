@@ -26,7 +26,7 @@ namespace TagCloudBuilder.Tests
 			_wordReader = new Mock<IWordReader>();
 			_wordWeighter = new Mock<IWordWeighter>();
 			_wordWeighter.Setup((w) => w.WeightWords(It.IsAny<IWordReader>()))
-				.Returns((IWordReader r) => r.ReadWords().Select(w => new WeightedWord(w, 1)));
+				.Returns((IWordReader r) => r.ReadWords().GetValueOrThrow().Select(w => new WeightedWord(w, 1)));
 			_wordDrawer = new Mock<IWordDrawer>();
 		}
 
@@ -37,7 +37,7 @@ namespace TagCloudBuilder.Tests
 			var imageBuilder =
 				new CloudImageBuilder(_cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSize);
 			var result = imageBuilder.BuildImage();
-			result.Size.Should().Be(_defaultSize);
+			result.Value.Size.Should().Be(_defaultSize);
 		}
 
 		[Test]

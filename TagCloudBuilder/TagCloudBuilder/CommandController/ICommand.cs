@@ -2,7 +2,7 @@
 {
 	public interface ICommand
 	{
-		void Execute(string[] args);
+		Result<None> Execute(string[] args);
 		string GetCommandName();
 		string GetCommandSyntax();
 	}

@@ -17,10 +17,11 @@ namespace TagCloudBuilder.TagCloudBuilder
 			_cloud = new List<Rectangle>();
 		}
 
-		public Rectangle PutNextRectangle(Size rectangleSize)
+		public Result<Rectangle> PutNextRectangle(Size rectangleSize)
 		{
-			var rectangle = FindPlaceForNextRectangle(rectangleSize);
-			_cloud.Add(rectangle);
+			var rectangle = Result.Of(() => FindPlaceForNextRectangle(rectangleSize), $"Не корректный размер прямоугольника {rectangleSize}");
+			if (rectangle.IsSuccess)
+				_cloud.Add(rectangle.Value);
 			return rectangle;
 		}
 

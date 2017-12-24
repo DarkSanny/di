@@ -15,16 +15,19 @@ namespace TagCloudBuilder.CommandController
 			_commands = commands;
 		}
 
-		public void Execute(string commandLine)
+		public Result<None> Execute(string commandLine)
 		{
-			commandLine = string.Join(" ", commandLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries));
-			var command = _commands
-				.Where(c => commandLine.StartsWith(c.GetCommandName()))
-				.OrderByDescending(c => c.GetCommandName().Length)
-				.FirstOrDefault();
-			if (command != null)
-				command.Execute(commandLine.Substring(command.GetCommandName().Length).Split(' '));
-			else _writer.WriteLine("Incorrect command!");
+			return Result.OfAction(() =>
+			{
+				commandLine = string.Join(" ", commandLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+				var command = _commands
+					.Where(c => commandLine.StartsWith(c.GetCommandName()))
+					.OrderByDescending(c => c.GetCommandName().Length)
+					.FirstOrDefault();
+				if (command != null)
+					command.Execute(commandLine.Substring(command.GetCommandName().Length).Split(' '));
+				else _writer.WriteLine("Incorrect command!");
+			});
 		}
 	}
 }

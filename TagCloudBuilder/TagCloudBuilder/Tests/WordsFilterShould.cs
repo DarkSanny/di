@@ -40,7 +40,7 @@ namespace TagCloudBuilder.Tests
 			var analyzer = new Mock<IWordAnalyzer>();
 			analyzer.Setup((a) => a.IsCorrectWord("слово")).Returns(false);
 			var filter = new WordsFilter(analyzer.Object, _converter.Object);
-			filter.FilterWords(_reader.Object).Should().BeEmpty();
+			filter.FilterWords(_reader.Object).GetValueOrThrow().Should().BeEmpty();
 		}
 
 		[Test]
@@ -66,7 +66,7 @@ namespace TagCloudBuilder.Tests
 			var reader = new Mock<IWordReader>();
 			reader.Setup((r) => r.ReadWords()).Returns(words);
 			var filter = new WordsFilter(new BoringWordsAnalyzer(), _converter.Object);
-			filter.FilterWords(reader.Object).Should().BeEmpty();
+			filter.FilterWords(reader.Object).GetValueOrThrow().Should().BeEmpty();
 		}
 
 		[Test]
@@ -93,7 +93,7 @@ namespace TagCloudBuilder.Tests
 				.Returns(true)
 				.Callback(() => calls++);
 			var filter = new WordsFilter(analyzer.Object, _converter.Object);
-			filter.FilterWords(reader.Object).ToList();
+			filter.FilterWords(reader.Object).GetValueOrThrow().ToList();
 			calls.Should().Be(words.Count);
 		}
 	}

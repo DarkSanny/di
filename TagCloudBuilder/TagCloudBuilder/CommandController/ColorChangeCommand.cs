@@ -16,15 +16,18 @@ namespace TagCloudBuilder.CommandController
 			_drawer = drawer;
 		}
 
-		public void Execute(string[] args)
+		public Result<None> Execute(string[] args)
 		{
-			if (!IsCorrectArgs(args))
-				_writer.WriteLine(GetErrorMessage());
-			else
+			return Result.OfAction(() =>
 			{
-				var rgb = args.Select(int.Parse).ToList();
-				 _drawer.SetBrush(new SolidBrush(Color.FromArgb(100, rgb[0], rgb[1], rgb[2])));
-			}
+				if (!IsCorrectArgs(args))
+					_writer.WriteLine(GetErrorMessage());
+				else
+				{
+					var rgb = args.Select(int.Parse).ToList();
+					_drawer.SetBrush(new SolidBrush(Color.FromArgb(100, rgb[0], rgb[1], rgb[2])));
+				}
+			});	
 		}
 
 		private bool IsCorrectArgs(string[] args)

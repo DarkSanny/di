@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Linq;
 using TagCloudBuilder.WordsConverter;
 
 namespace TagCloudBuilder.TagCloudBuilder
@@ -7,7 +9,7 @@ namespace TagCloudBuilder.TagCloudBuilder
 	{
 		private readonly IWordWeighter _weighter;
 		private readonly IWordDrawer _drawer;
-		private Bitmap _cloudImage;
+		private Result<Bitmap> _cloudImage;
 
 		public CloudImageBuilder(
 			ICloudBuilder builder,
@@ -29,18 +31,35 @@ namespace TagCloudBuilder.TagCloudBuilder
 
 		private void BuildCloudImage(ICloudBuilder builder, IWordReader reader, Size imageSize)
 		{
-			_cloudImage = new Bitmap(imageSize.Width, imageSize.Height);
-			var graphics = Graphics.FromImage(_cloudImage);
-			var weightedWords = _weighter.WeightWords(reader);
-			foreach (var weightedWord in weightedWords)
-			{
-				var rectanglePlace = builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord));
-				graphics.DrawRectangle(Pens.RoyalBlue, rectanglePlace);
-				_drawer.DrawWord(graphics, weightedWord, rectanglePlace);
-			}
+			_cloudImage = Result.Of(() => new Bitmap(imageSize.Width, imageSize.Height))
+				.Then(image => DrawCloud(builder, reader, imageSize, image));	
 		}
 
-		public Bitmap BuildImage()
+		private Bitmap DrawCloud(ICloudBuilder builder, IWordReader reader, Size imageSize, Bitmap bitmap)
+		{
+			var graphics = Graphics.FromImage(bitmap);
+			_weighter.WeightWords(reader)
+				.ToList()
+				.ForEach(weightedWord => builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord).Value)
+				.Then((rectangle) => DrawWord(graphics, imageSize, rectangle, weightedWord)));
+			return bitmap;
+		}
+
+		private void DrawWord(Graphics graphics, Size imageSize,  Rectangle rectanglePlace, WeightedWord weightedWord)
+		{
+			if (IsRectangleOutOfSize(rectanglePlace, imageSize))
+				throw new ArgumentException("Rectangle out of image");
+			graphics.DrawRectangle(Pens.RoyalBlue, rectanglePlace);
+			_drawer.DrawWord(graphics, weightedWord, rectanglePlace);
+		}
+
+		private static bool IsRectangleOutOfSize(Rectangle rectangle, Size size) => 
+			rectangle.X < 0 
+			|| rectangle.X + rectangle.Width > size.Width 
+			|| rectangle.Y < 0 
+			||rectangle.Y + rectangle.Height > size.Height;
+
+		public Result<Bitmap> BuildImage()
 		{
 			return _cloudImage;
 		}

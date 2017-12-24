@@ -13,9 +13,9 @@ namespace TagCloudBuilder.WordsConverter
 			_filename = filename;
 		}
 
-		public IEnumerable<string> ReadWords()
+		public Result<IEnumerable<string>> ReadWords()
 		{
-			return File.ReadLines(_filename, Encoding.Default);
+			return Result.Of(() => File.ReadLines(_filename, Encoding.Default), $"Нет файла {_filename}");
 		}
 	}
 }

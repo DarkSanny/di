@@ -22,7 +22,7 @@ namespace TagCloudBuilder
 			var container = builder.Build();
 			var controller = container.Resolve<CloudCommandController>();
 			controller.Execute("set color 100 200 20");
-			return container.Resolve<IImageBuilder>().BuildImage();
+			return container.Resolve<IImageBuilder>().BuildImage().Value;
 		}
 
 		public static IImageSaver CreateSaver()

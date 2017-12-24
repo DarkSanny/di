@@ -35,7 +35,7 @@ namespace TagCloudBuilder.Tests
 			var size = new Size(5, 4);
 			var rect = _builder.PutNextRectangle(size);
 
-			rect.Size.Should().Be(size);
+			rect.Value.Size.Should().Be(size);
 		}
 
 		[Test]
@@ -60,7 +60,7 @@ namespace TagCloudBuilder.Tests
 		{
 			var firstRect = _builder.PutNextRectangle(new Size(5, 4));
 
-			firstRect.IntersectsWith(new Rectangle(_center.X, _center.Y, 1, 1)).Should().BeTrue();
+			firstRect.Value.IntersectsWith(new Rectangle(_center.X, _center.Y, 1, 1)).Should().BeTrue();
 		}
 
 		[Test]
@@ -69,7 +69,7 @@ namespace TagCloudBuilder.Tests
 			var firstRect = _builder.PutNextRectangle(new Size(5, 4));
 			var secondRect = _builder.PutNextRectangle(new Size(5, 4));
 
-			firstRect.IntersectsWith(secondRect).Should().BeFalse();
+			firstRect.Value.IntersectsWith(secondRect.Value).Should().BeFalse();
 		}
 
 		[Test]
@@ -79,7 +79,7 @@ namespace TagCloudBuilder.Tests
 			for (var i = 0; i < 9; i++)
 				_builder.PutNextRectangle(size);
 
-			DistanceToCenter(_builder.PutNextRectangle(size), _center).Should().BeLessOrEqualTo(5);
+			DistanceToCenter(_builder.PutNextRectangle(size).Value, _center).Should().BeLessOrEqualTo(5);
 		}
 
 

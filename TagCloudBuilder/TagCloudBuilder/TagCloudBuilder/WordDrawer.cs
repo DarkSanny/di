@@ -17,11 +17,14 @@ namespace TagCloudBuilder.TagCloudBuilder
 			_brush = Brushes.Black;
 		}
 
-		public Size GetWordSize(Graphics graphics, WeightedWord weightedWord)
+		public Result<Size> GetWordSize(Graphics graphics, WeightedWord weightedWord)
 		{
-			var font = new Font(_fontFamily, _converterWeightToSize(weightedWord.Weight), _style);
-			var measureString = graphics.MeasureString(weightedWord.Word, font);
-			return measureString.ToSize();
+			return Result.Of(() =>
+			{
+				var font = new Font(_fontFamily, _converterWeightToSize(weightedWord.Weight), _style);
+				var measureString = graphics.MeasureString(weightedWord.Word, font);
+				return measureString.ToSize();
+			});
 		}
 
 		public void DrawWord(Graphics graphics, WeightedWord weightedWord, Rectangle rectanglePlace)

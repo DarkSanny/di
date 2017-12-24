@@ -4,6 +4,6 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public interface ICloudBuilder
 	{
-		Rectangle PutNextRectangle(Size rectangleSize);
+		Result<Rectangle> PutNextRectangle(Size rectangleSize);
 	}
 }

@@ -2,6 +2,6 @@
 {
 	public interface ICommandController
 	{
-		void Execute(string commandLine);
+		Result<None> Execute(string commandLine);
 	}
 }

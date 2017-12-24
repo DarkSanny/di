@@ -14,12 +14,11 @@ namespace TagCloudBuilder.WordsConverter
 			_converter = converter;
 		}
 
-		public IEnumerable<string> FilterWords(IWordReader reader)
+		public Result<IEnumerable<string>> FilterWords(IWordReader reader)
 		{
-			return reader
-				.ReadWords()
-				.Select(_converter.ConvertWord)
-				.Where(_analyzer.IsCorrectWord);
+			return reader.ReadWords()
+				.Then(words => words.Select(_converter.ConvertWord))
+				.Then(words => words.Where(_analyzer.IsCorrectWord));
 		}
 	}
 }

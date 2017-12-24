@@ -17,10 +17,11 @@ namespace TagCloudBuilder.TagCloudBuilder
 		{
 			return _filter
 				.FilterWords(reader)
-				.GroupBy(word => word)
-				.Select(group => new WeightedWord(group.Key, group.Count()))
-				.OrderByDescending(weightedWord => weightedWord.Weight)
-				.ToList();
+				.Then(words => words.GroupBy(word => word)
+					.Select(group => new WeightedWord(group.Key, group.Count()))
+					.OrderByDescending(weightedWord => weightedWord.Weight)
+					.ToList()).GetValueOrThrow();
+
 		}
 	}
 }

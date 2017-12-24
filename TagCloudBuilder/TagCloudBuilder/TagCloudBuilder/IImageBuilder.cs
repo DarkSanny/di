@@ -4,6 +4,6 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public interface IImageBuilder
 	{
-		Bitmap BuildImage();
+		Result<Bitmap> BuildImage();
 	}
 }
