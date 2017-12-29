@@ -40,8 +40,8 @@ namespace TagCloudBuilder.TagCloudBuilder
 			var graphics = Graphics.FromImage(bitmap);
 			_weighter.WeightWords(reader)
 				.Then(weightedWords =>
-					weightedWords.Select(ww => (builder.PutNextRectangle(_drawer.GetWordSize(graphics, ww).Value), ww)).ToList())
-				.Then(wordsAndPlaces => wordsAndPlaces.ForEach(wp => DrawWord(graphics, imageSize, wp.Item1.Value, wp.Item2)));	
+					weightedWords.Select(ww => (builder.PutNextRectangle(_drawer.GetWordSize(graphics, ww).GetValueOrThrow()), ww)).ToList())
+				.Then(wordsAndPlaces => wordsAndPlaces.ForEach(wp => DrawWord(graphics, imageSize, wp.Item1.GetValueOrThrow(), wp.Item2)));	
 			return bitmap;
 		}
 
