@@ -8,12 +8,12 @@ namespace CloudVisualization
 		public MyForm()
 		{
 			var cloud = CloudFactory.CreateCloud();
-			Size = cloud.Size;
+			cloud.Then(c => Size = c.Size);
 			Paint += (sender, args) =>
 			{
-				args.Graphics.DrawImage(cloud, 0, 0);
+				cloud.Then(c => args.Graphics.DrawImage(c, 0, 0));
 			};
-			cloud.SaveImage(CloudFactory.CreateSaver(), "Image1.png");
+			cloud.Then(c => c.SaveImage(CloudFactory.CreateSaver(), "Image1.png"));
 		}
 	}
 }

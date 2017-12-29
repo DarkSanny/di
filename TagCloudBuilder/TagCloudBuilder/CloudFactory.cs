@@ -10,7 +10,7 @@ namespace TagCloudBuilder
 {
 	public class CloudFactory
 	{
-		public static Bitmap CreateCloud()
+		public static Result<Bitmap> CreateCloud()
 		{
 			var builder = ConfigurateBuilder();
 			builder.RegisterType<ColorChangeCommand>()

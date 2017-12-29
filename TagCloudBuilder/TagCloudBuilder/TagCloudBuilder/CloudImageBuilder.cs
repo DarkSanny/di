@@ -39,9 +39,9 @@ namespace TagCloudBuilder.TagCloudBuilder
 		{
 			var graphics = Graphics.FromImage(bitmap);
 			_weighter.WeightWords(reader)
-				.ToList()
-				.ForEach(weightedWord => builder.PutNextRectangle(_drawer.GetWordSize(graphics, weightedWord).Value)
-				.Then((rectangle) => DrawWord(graphics, imageSize, rectangle, weightedWord)));
+				.Then(weightedWords =>
+					weightedWords.Select(ww => (builder.PutNextRectangle(_drawer.GetWordSize(graphics, ww).Value), ww)).ToList())
+				.Then(wordsAndPlaces => wordsAndPlaces.ForEach(wp => DrawWord(graphics, imageSize, wp.Item1.Value, wp.Item2)));	
 			return bitmap;
 		}
 

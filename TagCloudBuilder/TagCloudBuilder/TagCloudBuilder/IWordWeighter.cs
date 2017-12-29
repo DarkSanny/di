@@ -5,6 +5,6 @@ namespace TagCloudBuilder.TagCloudBuilder
 {
 	public interface IWordWeighter
 	{
-		IEnumerable<WeightedWord> WeightWords(IWordReader reader);
+		Result<IEnumerable<WeightedWord>> WeightWords(IWordReader reader);
 	}
 }

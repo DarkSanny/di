@@ -26,7 +26,7 @@ namespace TagCloudBuilder.Tests
 			_wordReader = new Mock<IWordReader>();
 			_wordWeighter = new Mock<IWordWeighter>();
 			_wordWeighter.Setup((w) => w.WeightWords(It.IsAny<IWordReader>()))
-				.Returns((IWordReader r) => r.ReadWords().GetValueOrThrow().Select(w => new WeightedWord(w, 1)));
+				.Returns((IWordReader r) => r.ReadWords().Then(words => words.Select(w => new WeightedWord(w, 1))));
 			_wordDrawer = new Mock<IWordDrawer>();
 		}
 
