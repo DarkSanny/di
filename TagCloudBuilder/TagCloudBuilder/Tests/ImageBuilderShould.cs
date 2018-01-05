@@ -16,7 +16,7 @@ namespace TagCloudBuilder.Tests
 		private Mock<IWordReader> _wordReader;
 		private Mock<IWordWeighter> _wordWeighter;
 		private Mock<IWordDrawer> _wordDrawer;
-		private readonly Size _defaultSize = new Size(100, 100);
+		private readonly CloudSettings _defaultSettings = new CloudSettings() {ImageSize = new Size(100, 100)};
 		private readonly List<string> _defaultWords = new List<string>() { "слово" };
 
 		[SetUp]
@@ -35,9 +35,9 @@ namespace TagCloudBuilder.Tests
 		public void Result_ShouldHaveSameSize()
 		{
 			var imageBuilder =
-				new CloudImageBuilder(_cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSize);
+				new CloudImageBuilder(_cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSettings);
 			var result = imageBuilder.BuildImage();
-			result.Value.Size.Should().Be(_defaultSize);
+			result.Value.Size.Should().Be(_defaultSettings.ImageSize);
 		}
 
 		[Test]
@@ -49,7 +49,7 @@ namespace TagCloudBuilder.Tests
 			cloudBuilder.Setup((b) => b.PutNextRectangle(It.IsAny<Size>()))
 				.Returns((Size s) => new Rectangle(-s.Width / 2, -s.Height / 2, s.Width, s.Height))
 				.Callback(() => calls++);
-			new CloudImageBuilder(cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSize);
+			new CloudImageBuilder(cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSettings);
 			calls.Should().Be(1);
 		}
 
@@ -63,7 +63,7 @@ namespace TagCloudBuilder.Tests
 			cloudBuilder.Setup((b) => b.PutNextRectangle(It.IsAny<Size>()))
 				.Returns((Size s) => new Rectangle(-s.Width / 2, -s.Height / 2, s.Width, s.Height))
 				.Callback(() => calls++);
-			new CloudImageBuilder(cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSize);
+			new CloudImageBuilder(cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSettings);
 			calls.Should().Be(2);
 		}
 
@@ -71,9 +71,9 @@ namespace TagCloudBuilder.Tests
 		public void Rebuild_ShouldBuildNewResult()
 		{
 			var imageBuilder =
-				new CloudImageBuilder(_cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSize);
+				new CloudImageBuilder(_cloudBuilder.Object, _wordReader.Object, _wordWeighter.Object, _wordDrawer.Object, _defaultSettings);
 			var result1 = imageBuilder.BuildImage();
-			imageBuilder.RebuildCloudImage(_cloudBuilder.Object, _wordReader.Object, _defaultSize);
+			imageBuilder.RebuildCloudImage(_cloudBuilder.Object, _wordReader.Object, _defaultSettings);
 			var result2 = imageBuilder.BuildImage();
 			result1.Should().NotBe(result2);
 		}

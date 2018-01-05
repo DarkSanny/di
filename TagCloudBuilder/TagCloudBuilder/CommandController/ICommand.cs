@@ -5,5 +5,6 @@
 		Result<None> Execute(string[] args);
 		string GetCommandName();
 		string GetCommandSyntax();
+		string GetSuccessMessage();
 	}
 }
