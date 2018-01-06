@@ -29,9 +29,7 @@ namespace TagCloudBuilder.CommandController
 					var result = command
 						.Execute(commandLine.Substring(command.GetCommandName().Length)
 						.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries));
-					if (result.IsSuccess)
-						_writer.WriteLine(command.GetSuccessMessage());
-					else _writer.WriteLine("Incorrect syntax \n" + command.GetCommandSyntax());
+					_writer.WriteLine(result.IsSuccess ? command.GetSuccessMessage() : result.Error);
 				}	
 				else _writer.WriteLine("Incorrect command!");
 			});

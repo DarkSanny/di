@@ -17,7 +17,7 @@ namespace TagCloudBuilder.CommandController
 			return Result.OfAction(() =>
 			{
 				if (args.Length != 1)
-					throw new ArgumentException();
+					throw new Exception("Incorrect syntax \n" + GetCommandSyntax());
 				_settings.PathToWords = args[0];
 			});
 		}
@@ -34,7 +34,7 @@ namespace TagCloudBuilder.CommandController
 
 		public string GetSuccessMessage()
 		{
-			return $"Path to words was changed: {_settings.PathToWords}";
+			return $"Path to words changed: {_settings.PathToWords}";
 		}
 	}
 }

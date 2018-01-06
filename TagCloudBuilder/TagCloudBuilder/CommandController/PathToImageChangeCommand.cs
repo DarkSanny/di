@@ -16,7 +16,7 @@ namespace TagCloudBuilder.CommandController
 			return Result.OfAction(() =>
 			{
 			   if (args.Length != 2)
-				   throw new ArgumentException();
+				   throw new Exception("Incorrect syntax \n" + GetCommandSyntax());
 				_settings.PathToImage = args[0];
 				_settings.ImageName = args[1];
 			});

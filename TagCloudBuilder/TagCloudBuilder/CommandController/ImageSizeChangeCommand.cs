@@ -19,8 +19,7 @@ namespace TagCloudBuilder.CommandController
 			return Result.OfAction(() =>
 			{
 				if (!IsCorrectArgs(args))
-					throw new ArgumentException();
-
+					throw new Exception("Incorrect syntax \n" + GetCommandSyntax());
 				var size = args.Select(int.Parse).ToList();
 				_settings.ImageSize = new Size(size[0], size[1]);
 			});
@@ -46,7 +45,7 @@ namespace TagCloudBuilder.CommandController
 
 		public string GetSuccessMessage()
 		{
-			return $"Size was changed: Width = {_settings.ImageSize.Width} Height = {_settings.ImageSize.Height}";
+			return $"Size changed: Width = {_settings.ImageSize.Width} Height = {_settings.ImageSize.Height}";
 		}
 	}
 }

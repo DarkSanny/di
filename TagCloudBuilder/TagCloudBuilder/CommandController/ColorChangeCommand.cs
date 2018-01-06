@@ -19,7 +19,7 @@ namespace TagCloudBuilder.CommandController
 			return Result.OfAction(() =>
 			{
 				if (!IsCorrectArgs(args))
-					throw new ArgumentException();
+					throw new Exception("Incorrect syntax \n" + GetCommandSyntax());
 				var rgb = args.Select(int.Parse).ToList();
 				_drawer.Brush = new SolidBrush(Color.FromArgb(100, rgb[0], rgb[1], rgb[2]));
 			});	
